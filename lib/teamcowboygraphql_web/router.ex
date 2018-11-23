@@ -1,11 +1,19 @@
 defmodule TeamCowboyGraphQLWeb.Router do
   use TeamCowboyGraphQLWeb, :router
 
-  forward "/graphiql",
-    Absinthe.Plug.GraphiQL,
-    schema: TeamCowboyGraphQLWeb.Schema
+  pipeline :graphql do
+    plug :accepts, ["json"]
+    plug TeamCowboyGraphQLWeb.Context
+  end
 
-  forward "/", Absinthe.Plug,
-    schema: TeamCowboyGraphQLWeb.Schema
-    
+  scope "/" do
+    pipe_through :graphql
+
+    forward "/graphiql",
+            Absinthe.Plug.GraphiQL,
+            schema: TeamCowboyGraphQLWeb.Schema,
+            default_url: "/graphql"
+
+    forward "/graphql", Absinthe.Plug, schema: TeamCowboyGraphQLWeb.Schema
+  end
 end
