@@ -6,6 +6,8 @@ defmodule TeamCowboyGraphQLWeb.Schema do
   @desc "A team"
   object :team do
     field(:team_id, non_null(:integer))
+    field(:name, non_null(:string))
+    field(:short_name, non_null(:string))
   end
 
   query(name: "Query") do
