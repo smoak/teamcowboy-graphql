@@ -5,7 +5,8 @@ defmodule TeamCowboyGraphQL.Client.Teams do
     {:ok, teams} =
       ApiRequest.execute(user_token, "User_GetTeams", %{dashboardTeamsOnly: dashboard_only})
 
-    teams |> Enum.map(fn t -> 
+    teams
+    |> Enum.map(fn t ->
       %{
         team_id: t |> Map.get("teamId"),
         name: t |> Map.get("name"),
