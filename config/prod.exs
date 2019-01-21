@@ -10,15 +10,16 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :teamcowboygraphql, TeamCowboyGraphQLWeb.Endpoint,
-  https: [
-    :inet6,
-    port: System.get_env("PORT") || 443,
-    cipher_suite: :strong,
-    keyfile: System.get_env("HTTP_SSL_KEY_PATH"),
-    certfile: System.get_env("HTTP_SSL_CERT_PATH")
-  ],
-  url: [host: "example.com", port: 443],
-  force_ssl: [rewrite_on: [:x_forwarded_proto], hsts: true],
+  http: [:inet6, port: System.get_env("PORT") || 80],
+  # https: [
+  #   :inet6,
+  #   port: System.get_env("PORT") || 443,
+  #   cipher_suite: :strong,
+  #   keyfile: System.get_env("HTTP_SSL_KEY_PATH"),
+  #   certfile: System.get_env("HTTP_SSL_CERT_PATH")
+  # ],
+  url: [host: "example.com", port: 80],
+  # force_ssl: [rewrite_on: [:x_forwarded_proto], hsts: true],
   secret_key_base: Map.fetch!(System.get_env(), "SECRET_KEY_BASE"),
   server: true
 
