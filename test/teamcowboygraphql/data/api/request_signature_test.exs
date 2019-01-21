@@ -19,7 +19,7 @@ defmodule TeamCowboyGraphQL.Data.Api.RequestSignatureTest do
           }
         )
 
-      assert sig == "ccea4bba78db6bb32cf953e6cce610b2c6d60068"
+      assert sig == "cde63d18f2e4b906891bcfdcc0f47c7135412ad5"
     end
   end
 end
