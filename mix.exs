@@ -46,7 +46,8 @@ defmodule TeamCowboyGraphQL.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:httpoison, "~> 1.4"},
       {:ex_doc, "~> 0.19", only: :dev, runtime: false},
-      {:credo, "~> 1.0", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
+      {:distillery, "~> 2.0"}
     ]
   end
 end

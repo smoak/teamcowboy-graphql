@@ -5,9 +5,6 @@ elixir:
 otp_release:
   - 20.0
   - 21.0
-before_install:
-  - "touch config/prod.secret.exs"
-  - "touch config/api_keys.secret.exs"
 script:
   - "MIX_ENV=test mix local.hex --force"
   - "mix credo --ignore readability --strict"
