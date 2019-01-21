@@ -15,7 +15,7 @@ defmodule TeamCowboyGraphQL.Data.Api.ApiRequest do
     {:ok, %HTTPoison.Response{status_code: 200, body: body}} =
       HTTPoison.get(teamcowboy_host, [], params: request_params)
 
-    case body |> Poison.decode!(as: %TeamCowboyResponse{}) do
+    case body |> IO.inspect() |> Poison.decode!(as: %TeamCowboyResponse{}) do
       %{success: true, body: resp} -> {:ok, resp}
       %{success: false, body: %{error: %{message: error}}} -> {:error, error}
     end
