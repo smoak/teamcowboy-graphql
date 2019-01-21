@@ -1,4 +1,11 @@
 defmodule TeamCowboyGraphQL.Data.Api.RequestSignature do
+  @moduledoc """
+  This is the RequestSignature module.
+  """
+
+  @doc """
+  Creates a request signature string. See http://api.teamcowboy.com/v1/docs/#_Toc372547906
+  """
   def create(http_method, api_method, request_params) do
     private_api_key =
       Application.fetch_env!(:teamcowboygraphql, :teamcowboy_config)

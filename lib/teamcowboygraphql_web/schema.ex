@@ -31,8 +31,8 @@ defmodule TeamCowboyGraphQLWeb.Schema do
     field(:status, non_null(:string))
     field(:title, non_null(:string))
     field(:location, :location)
-    field(:start_time, :datetime)
-    field(:end_time, :datetime)
+    field(:start_timestamp, :integer)
+    field(:end_timestamp, :integer)
   end
 
   query(name: "Query") do
