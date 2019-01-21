@@ -37,8 +37,9 @@ end
 environment :prod do
   set include_erts: true
   set include_src: false
-  set cookie: :"*)iUq[k`L$>mQlcBN|mZs;:smNd*dnH;&8)EQIT4QW/K{I1_.%9d5m@_t,DH^dRp"
-  set vm_args: "rel/vm.args"
+  set config_providers: [
+    {Mix.Releases.Config.Providers.Elixir, ["${RELEASE_ROOT_DIR}/etc/config.exs"]}
+  ]
 end
 
 # You may define one or more releases in this file.
@@ -48,8 +49,12 @@ end
 
 release :teamcowboygraphql do
   set version: current_version(:teamcowboygraphql)
+  set cookie: "*)iUq[k`L$>mQlcBN|mZs;:smNd*dnH;&8)EQIT4QW/K{I1_.%9d5m@_t,DH^dRp"
   set applications: [
     :runtime_tools
+  ]
+  set overlays: [
+    {:copy, "rel/config/config.exs", "etc/config.exs"}
   ]
 end
 

@@ -1,4 +1,5 @@
 {
+  "version": "2.0",
   "name": "TeamCowboyGraphQL",
   "env": {
     "HTTP_SSL_KEY_PATH": "",

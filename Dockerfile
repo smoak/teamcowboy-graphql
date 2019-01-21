@@ -8,7 +8,6 @@ ENV MIX_ENV=prod
 ENV APP_NAME=teamcowboygraphql
 ENV APP_VSN=0.1.0
 
-
 WORKDIR /opt/app
 
 RUN apk update && \
@@ -20,11 +19,36 @@ RUN apk update && \
 
 COPY . .
 
+RUN echo ${PORT}
+RUN echo ${SECRET_KEY_BASE}
+
 RUN mix do deps.get, deps.compile, compile
 
 RUN \
   mkdir -p /opt/built && \
   mix release --verbose && \
   cp _build/${MIX_ENV}/rel/${APP_NAME}/releases/${APP_VSN}/${APP_NAME}.tar.gz /opt/built && \
-  cd /opt/built
+  cd /opt/built && \
+  tar -xzvf ${APP_NAME}.tar.gz && \
+  rm ${APP_NAME}.tar.gz
+
+FROM alpine:${ALPINE_VERSION}
+
+ENV APP_NAME=teamcowboygraphql
+
+RUN apk update && \
+    apk add --no-cache \
+    bash \
+    openssl-dev
+
+ENV REPLACE_OS_VARS=true
+
+WORKDIR /opt/app
+
+COPY --from=builder /opt/built .
+
+RUN echo ${PORT}
+RUN echo ${SECRET_KEY_BASE}
+
+CMD trap 'exit' INT; /opt/app/bin/${APP_NAME} foreground
   
