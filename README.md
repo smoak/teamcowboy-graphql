@@ -1,11 +1,13 @@
 # TeamCowboyGraphQL
 
+[![Build Status](https://travis-ci.org/smoak/teamcowboy-graphql.svg?branch=master)](https://travis-ci.org/smoak/teamcowboy-graphql)
+
 A GraphQL implementation of the [TeamCowboy API](https://api.teamcowboy.com/v1/docs/)
 
 ## Setup
 
-  * Install dependencies with `mix deps.get`
-  * Start Phoenix endpoint with `mix phx.server`
+- Install dependencies with `mix deps.get`
+- Start Phoenix endpoint with `mix phx.server`
 
 ## GraphiQL
 
