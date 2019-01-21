@@ -1,0 +1,45 @@
+defmodule TeamCowboyGraphQL.Data.Normalization.TeamCowboy do
+  alias TeamCowboyGraphQL.Data.TeamCowboy.Event
+
+  @type event() :: map()
+
+  @spec normalize_team_events(list(event())) :: list(Event.t())
+  def normalize_team_events(events) do
+    events |> Enum.map(&normalize_team_event/1)
+  end
+
+  @spec normalize_team_event(event()) :: Event.t()
+  def normalize_team_event(event) do
+    %Event{
+      event_id: event |> Map.get("eventId"),
+      season_id: event |> Map.get("seasonId"),
+      season_name: event |> Map.get("seasonName"),
+      event_type: event |> Map.get("eventType"),
+      status: event |> Map.get("status"),
+      title: event |> Map.get("titleFull"),
+      start_timestamp:
+        event
+        |> Map.get("dateTimeInfo")
+        |> Map.get("startDateTimeUtc")
+        |> normalize_date_time_info(),
+      end_timestamp:
+        event
+        |> Map.get("dateTimeInfo")
+        |> Map.get("endDateTimeUtc")
+        |> normalize_date_time_info()
+    }
+  end
+
+  defp normalize_date_time_info(nil), do: nil
+
+  defp normalize_date_time_info(date_time) do
+    {:ok, date, _} =
+      date_time
+      |> String.split(" ")
+      |> Enum.join("T")
+      |> String.pad_trailing(20, "Z")
+      |> DateTime.from_iso8601()
+
+    date |> DateTime.to_unix()
+  end
+end
