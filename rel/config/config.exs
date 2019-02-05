@@ -1,10 +1,11 @@
 use Mix.Config
 
-port = String.to_integer(System.get_env("PORT"))
+port = 443
+app_name = System.get_env("APP_NAME")
 
 config :teamcowboygraphql, TeamCowboyGraphQLWeb.Endpoint,
   http: [:inet6, port: port],
-  url: [host: System.get_env("HOSTNAME"), port: port],
+  url: [host: "#{app_name}.gigalixirapp.com", port: port],
   secret_key_base: System.get_env("SECRET_KEY_BASE")
   # https: [
   #   :inet6,
