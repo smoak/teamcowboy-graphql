@@ -7,5 +7,5 @@ otp_release:
   - 21.0
 script:
   - "MIX_ENV=test mix local.hex --force"
-  - "mix credo --ignore readability --strict"
+  - "MIX_ENV=test mix credo --ignore readability --strict"
   - "MIX_ENV=test mix do deps.get, test"
