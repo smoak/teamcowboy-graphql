@@ -9,6 +9,5 @@ otp_release:
   - 20.0
   - 21.0
 script:
-  - "mix local.hex --force"
   - "mix credo --ignore readability --strict"
   - "mix do deps.get, test"
