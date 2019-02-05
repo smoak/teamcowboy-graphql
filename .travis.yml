@@ -2,10 +2,13 @@ language: elixir
 elixir:
   - "1.7"
   - "1.8"
+env:
+  global:
+    - MIX_ENV=test
 otp_release:
   - 20.0
   - 21.0
 script:
-  - "MIX_ENV=test mix local.hex --force"
-  - "MIX_ENV=test mix credo --ignore readability --strict"
-  - "MIX_ENV=test mix do deps.get, test"
+  - "mix local.hex --force"
+  - "mix credo --ignore readability --strict"
+  - "mix do deps.get, test"
