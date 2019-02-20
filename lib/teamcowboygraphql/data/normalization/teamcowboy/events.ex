@@ -1,4 +1,4 @@
-defmodule TeamCowboyGraphQL.Data.Normalization.TeamCowboy do
+defmodule TeamCowboyGraphQL.Data.Normalization.TeamCowboy.Events do
   alias TeamCowboyGraphQL.Data.TeamCowboy.Event
 
   @type event() :: map()
