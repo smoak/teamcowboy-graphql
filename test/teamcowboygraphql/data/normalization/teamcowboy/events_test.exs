@@ -16,7 +16,8 @@ defmodule TeamCowboyGraphQL.Data.Normalization.TeamCowboy.EventsTest do
         "dateTimeInfo" => %{
           "startDateTimeUtc" => "2019-02-20 07:16:49",
           "endDateTimeUtc" => "2019-02-20 07:17:05"
-        }
+        },
+        "location" => nil
       }
 
       normalized_event = Events.normalize_team_event(teamcowboy_event)

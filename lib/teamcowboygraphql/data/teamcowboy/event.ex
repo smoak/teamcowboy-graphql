@@ -3,6 +3,8 @@ defmodule TeamCowboyGraphQL.Data.TeamCowboy.Event do
   Type that represents an event in GraphQL form
   """
 
+  alias TeamCowboyGraphQL.Data.TeamCowboy.Location
+
   defstruct event_id: nil,
             season_id: nil,
             season_name: nil,
@@ -10,7 +12,8 @@ defmodule TeamCowboyGraphQL.Data.TeamCowboy.Event do
             status: nil,
             title: nil,
             start_timestamp: nil,
-            end_timestamp: nil
+            end_timestamp: nil,
+            location: nil
 
   @type t(
           event_id,
@@ -20,7 +23,8 @@ defmodule TeamCowboyGraphQL.Data.TeamCowboy.Event do
           status,
           title,
           start_timestamp,
-          end_timestamp
+          end_timestamp,
+          location
         ) :: %__MODULE__{
           event_id: event_id,
           season_id: season_id,
@@ -29,7 +33,8 @@ defmodule TeamCowboyGraphQL.Data.TeamCowboy.Event do
           status: status,
           title: title,
           start_timestamp: start_timestamp,
-          end_timestamp: end_timestamp
+          end_timestamp: end_timestamp,
+          location: location
         }
 
   @type t :: %__MODULE__{
@@ -40,6 +45,7 @@ defmodule TeamCowboyGraphQL.Data.TeamCowboy.Event do
           status: String.t(),
           title: String.t(),
           start_timestamp: integer,
-          end_timestamp: integer
+          end_timestamp: integer,
+          location: Location.t()
         }
 end

@@ -1,6 +1,8 @@
 defmodule TeamCowboyGraphQL.Data.Normalization.TeamCowboy.Events do
   alias TeamCowboyGraphQL.Data.TeamCowboy.Event
 
+  alias TeamCowboyGraphQL.Data.Normalization.TeamCowboy.Locations
+
   @type event() :: map()
 
   @spec normalize_team_events(list(event())) :: list(Event.t())
@@ -17,6 +19,7 @@ defmodule TeamCowboyGraphQL.Data.Normalization.TeamCowboy.Events do
       event_type: event |> Map.get("eventType"),
       status: event |> Map.get("status"),
       title: event |> Map.get("titleFull"),
+      location: Locations.normalize_location(event |> Map.get("location")),
       start_timestamp:
         event
         |> Map.get("dateTimeInfo")
