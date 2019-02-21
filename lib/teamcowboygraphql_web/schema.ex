@@ -35,6 +35,12 @@ defmodule TeamCowboyGraphQLWeb.Schema do
     field(:end_timestamp, :integer)
   end
 
+  @desc "A user token"
+  object :user_token do
+    @desc "A unique token for the user matched. Tokens are 36-character, lower-cased GUIDs."
+    field(:token, non_null(:string))
+  end
+
   query(name: "Query") do
     @desc "Get teams for a user"
     field :teams, non_null(list_of(:team)) do
@@ -50,6 +56,16 @@ defmodule TeamCowboyGraphQLWeb.Schema do
       arg(:team_id, :integer)
 
       resolve(&Resolvers.Events.list/3)
+    end
+  end
+
+  mutation(name: "Mutation") do
+    @desc "Create a user token"
+    field :create_user_token, type: :user_token do
+      arg(:username, non_null(:string))
+      arg(:password, non_null(:string))
+
+      resolve(&Resolvers.Users.create_token/3)
     end
   end
 end
