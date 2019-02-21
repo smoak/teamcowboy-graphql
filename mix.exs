@@ -9,6 +9,7 @@ defmodule TeamCowboyGraphQL.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
+      test_coverage: [tool: ExCoveralls, summary: [threshold: 90]],
       deps: deps(),
       name: "TeamCowboyGraphQL",
       source_url: "https://github.com/smoak/teamcowboy-graphql",
@@ -47,7 +48,8 @@ defmodule TeamCowboyGraphQL.MixProject do
       {:httpoison, "~> 1.4"},
       {:ex_doc, "~> 0.19", only: :dev, runtime: false},
       {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
-      {:distillery, "~> 2.0"}
+      {:distillery, "~> 2.0"},
+      {:excoveralls, "~> 0.10", only: :test}
     ]
   end
 end
