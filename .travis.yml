@@ -10,4 +10,4 @@ otp_release:
   - 21.0
 script:
   - "mix credo --ignore readability --strict"
-  - "mix do deps.get, test --coverage"
+  - "mix do deps.get, test --cover"
