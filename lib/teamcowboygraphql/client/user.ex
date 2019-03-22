@@ -24,4 +24,25 @@ defmodule TeamCowboyGraphQL.Client.User do
 
     data |> Map.get("body")
   end
+
+  @spec get(Client.t()) :: map()
+  def get(client \\ %Client{}) do
+    timestamp = :os.system_time(:second) |> Integer.to_string()
+    nonce = :os.system_time(:nanosecond) |> Integer.to_string()
+
+    params = %{
+      method: "User_Get",
+      api_key: client.api_key,
+      userToken: client.auth,
+      timestamp: timestamp,
+      nonce: nonce
+    }
+
+    sig = RequestSignature.create("GET", "User_Get", params)
+    request_params = params |> Map.merge(%{sig: sig})
+
+    {200, data, _} = get(client, [], request_params)
+
+    data |> Map.get("body")
+  end
 end

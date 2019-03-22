@@ -35,6 +35,19 @@ defmodule TeamCowboyGraphQLWeb.Schema do
     field(:end_timestamp, :integer)
   end
 
+  @desc "A user"
+  object :user do
+    field(:user_id, non_null(:integer))
+    field(:first_name, non_null(:string))
+    field(:last_name, non_null(:string))
+    field(:full_name, non_null(:string))
+    field(:display_name, non_null(:string))
+    field(:email_address1, non_null(:string))
+    field(:profile_photo_full_url, non_null(:string))
+    field(:profile_photo_small_url, non_null(:string))
+    field(:profile_photo_thumbnail_url, non_null(:string))
+  end
+
   @desc "A user token"
   object :user_token do
     @desc "A unique token for the user matched. Tokens are 36-character, lower-cased GUIDs."
@@ -56,6 +69,11 @@ defmodule TeamCowboyGraphQLWeb.Schema do
       arg(:team_id, :integer)
 
       resolve(&Resolvers.Events.list/3)
+    end
+
+    @desc "Gets the current user"
+    field :current_user, non_null(:user) do
+      resolve(&Resolvers.Users.get/3)
     end
   end
 
