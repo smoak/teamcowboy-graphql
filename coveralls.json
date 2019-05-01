@@ -1,11 +1,11 @@
 {
-  "coverage_options": {
-    "minimum_coverage": 30
-  },
   "skip_files": [
     "lib/teamcowboygraphql.ex",
     "lib/teamcowboygraphql/application.ex",
     "lib/teamcowboygraphql_web/schema.ex",
-    "lib/teamcowboygraphql_web/router.ex"
+    "lib/teamcowboygraphql_web/router.ex",
+    "lib/teamcowboygraphql_web.ex",
+    "lib/teamcowboygraphql_web/endpoint.ex",
+    "lib/teamcowboygraphql/data/teamcowboy"
   ]
 }

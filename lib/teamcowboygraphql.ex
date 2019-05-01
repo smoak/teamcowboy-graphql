@@ -14,7 +14,7 @@ defmodule TeamCowboyGraphQL do
     do: {status_code, body, resp}
 
   @spec post(Client.t(), binary, keyword) :: {integer, any, HTTPoison.Response.t()}
-  def post(client, body \\ "", headers \\ []) do
+  def post(client, body \\ "", headers \\ [{"Content-Type", "application/x-www-form-urlencoded"}]) do
     raw_request(:post, client.endpoint, body, headers)
   end
 

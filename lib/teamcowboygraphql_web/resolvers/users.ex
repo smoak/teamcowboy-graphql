@@ -8,9 +8,11 @@ defmodule TeamCowboyGraphQLWeb.Resolvers.Users do
   @spec create_token(map(), %{username: String.t(), password: String.t()}, map()) ::
           {:ok, UserToken.t()}
   def create_token(_parent, %{username: _, password: _} = params, %{context: %{client: client}}) do
-    %{"token" => token, "userId" => _} = Auth.get_user_token(client, params)
-
-    {:ok, %UserToken{token: token}}
+    case Auth.get_user_token(client, params) do
+      {:ok, %{"token" => token, "userId" => _}} -> {:ok, %UserToken{token: token}}
+      {:error, msg} -> {:error, msg}
+      _ -> {:error, "Unknown error"}
+    end
   end
 
   @spec get(map(), map(), map()) :: {:ok, User.t()}
