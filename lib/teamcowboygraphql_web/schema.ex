@@ -79,7 +79,7 @@ defmodule TeamCowboyGraphQLWeb.Schema do
 
   mutation(name: "Mutation") do
     @desc "Create a user token"
-    field :create_user_token, type: non_null(:user_token) do
+    field :create_user_token, type: :user_token do
       arg(:username, non_null(:string))
       arg(:password, non_null(:string))
 
