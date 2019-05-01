@@ -46,6 +46,13 @@ defmodule TeamCowboyGraphQLWeb.Schema do
     field(:profile_photo_full_url, non_null(:string))
     field(:profile_photo_small_url, non_null(:string))
     field(:profile_photo_thumbnail_url, non_null(:string))
+
+    field :events, non_null(list_of(:event)) do
+      @desc "Whether or not to restrict the events retrieved only to those for teams on the user’s Dashboard."
+      arg(:dashboard_only, :boolean, default_value: false)
+
+      resolve(&Resolvers.Users.events/3)
+    end
   end
 
   @desc "A user token"
