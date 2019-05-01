@@ -7,7 +7,7 @@ defmodule TeamCowboyGraphQL.Client.Auth do
 
   @spec get_user_token(Client.t(), auth) :: map()
   def get_user_token(client \\ %Client{}, auth) do
-    body = client |> RequestBody.create("POST", "Auth_GetUserToken", auth)
+    body = RequestBody.create(client.api_key, "POST", "Auth_GetUserToken", auth)
 
     client |> post(body) |> process_teamcowboy_response
   end
