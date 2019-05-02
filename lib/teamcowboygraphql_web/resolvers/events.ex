@@ -9,11 +9,11 @@ defmodule TeamCowboyGraphQLWeb.Resolvers.Events do
     {:error, "No authorization header"}
   end
 
-  def list(_parent, %{team_id: team_id}, %{context: %{client: client}}) do
-    events = Team.get_events(client, %{team_id: team_id})
-
-    normalized_events = Events.normalize_team_events(events)
-
-    {:ok, normalized_events}
+  def list(_parent, args, %{context: %{client: client}}) do
+    case Team.get_events(client, args) do
+      {:ok, raw_events} -> {:ok, Events.normalize_team_events(raw_events)}
+      {:error, msg} -> {:error, msg}
+      _ -> {:error, "Unknown error"}
+    end
   end
 end

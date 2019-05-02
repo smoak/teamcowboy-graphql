@@ -13,7 +13,8 @@ defmodule TeamCowboyGraphQL.Data.TeamCowboy.Event do
             title: nil,
             start_timestamp: nil,
             end_timestamp: nil,
-            location: nil
+            location: nil,
+            team_id: nil
 
   @type t(
           event_id,
@@ -24,7 +25,8 @@ defmodule TeamCowboyGraphQL.Data.TeamCowboy.Event do
           title,
           start_timestamp,
           end_timestamp,
-          location
+          location,
+          team_id
         ) :: %__MODULE__{
           event_id: event_id,
           season_id: season_id,
@@ -34,7 +36,8 @@ defmodule TeamCowboyGraphQL.Data.TeamCowboy.Event do
           title: title,
           start_timestamp: start_timestamp,
           end_timestamp: end_timestamp,
-          location: location
+          location: location,
+          team_id: team_id
         }
 
   @type t :: %__MODULE__{
@@ -46,6 +49,7 @@ defmodule TeamCowboyGraphQL.Data.TeamCowboy.Event do
           title: String.t(),
           start_timestamp: integer,
           end_timestamp: integer,
-          location: Location.t()
+          location: Location.t(),
+          team_id: integer
         }
 end

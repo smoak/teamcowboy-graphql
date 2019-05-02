@@ -17,7 +17,10 @@ defmodule TeamCowboyGraphQL.Data.Normalization.TeamCowboy.EventsTest do
           "startDateTimeUtc" => "2019-02-20 07:16:49",
           "endDateTimeUtc" => "2019-02-20 07:17:05"
         },
-        "location" => nil
+        "location" => nil,
+        "team" => %{
+          "teamId" => 5
+        }
       }
 
       normalized_event = Events.normalize_team_event(teamcowboy_event)
@@ -30,7 +33,8 @@ defmodule TeamCowboyGraphQL.Data.Normalization.TeamCowboy.EventsTest do
                status: "bar",
                title: "TITLE",
                start_timestamp: 1_550_647_009,
-               end_timestamp: 1_550_647_025
+               end_timestamp: 1_550_647_025,
+               team_id: 5
              }
     end
   end
@@ -47,6 +51,9 @@ defmodule TeamCowboyGraphQL.Data.Normalization.TeamCowboy.EventsTest do
         "dateTimeInfo" => %{
           "startDateTimeUtc" => "2019-02-20 07:16:49",
           "endDateTimeUtc" => "2019-02-20 07:17:05"
+        },
+        "team" => %{
+          "teamId" => 5
         }
       }
 
@@ -60,6 +67,9 @@ defmodule TeamCowboyGraphQL.Data.Normalization.TeamCowboy.EventsTest do
         "dateTimeInfo" => %{
           "startDateTimeUtc" => "2019-02-20 07:16:49",
           "endDateTimeUtc" => "2019-02-20 07:17:05"
+        },
+        "team" => %{
+          "teamId" => 6
         }
       }
 

@@ -29,7 +29,8 @@ defmodule TeamCowboyGraphQL.Data.Normalization.TeamCowboy.Events do
         event
         |> Map.get("dateTimeInfo")
         |> Map.get("endDateTimeUtc")
-        |> normalize_date_time_info()
+        |> normalize_date_time_info(),
+      team_id: event |> Map.get("team") |> Map.get("teamId")
     }
   end
 

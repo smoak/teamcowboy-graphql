@@ -10,10 +10,15 @@ defmodule TeamCowboyGraphQL.Data.Normalization.TeamCowboy.Teams do
 
   @spec normalize_user_team(team()) :: Team.t()
   def normalize_user_team(team) do
+    photo_urls = team |> Map.get("teamPhoto", %{})
+
     %Team{
       team_id: team |> Map.get("teamId"),
       name: team |> Map.get("name"),
-      short_name: team |> Map.get("shortName")
+      short_name: team |> Map.get("shortName"),
+      photo_full_url: photo_urls |> Map.get("fullUrl"),
+      photo_small_url: photo_urls |> Map.get("smallUrl"),
+      photo_thumbnail_url: photo_urls |> Map.get("thumbUrl")
     }
   end
 end

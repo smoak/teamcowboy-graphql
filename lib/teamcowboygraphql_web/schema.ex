@@ -10,6 +10,9 @@ defmodule TeamCowboyGraphQLWeb.Schema do
     field(:team_id, non_null(:integer))
     field(:name, non_null(:string))
     field(:short_name, non_null(:string))
+    field(:photo_full_url, :string)
+    field(:photo_small_url, :string)
+    field(:photo_thumbnail_url, :string)
   end
 
   @desc "A location"
@@ -33,6 +36,12 @@ defmodule TeamCowboyGraphQLWeb.Schema do
     field(:location, :location)
     field(:start_timestamp, :integer)
     field(:end_timestamp, :integer)
+
+    field(:team, non_null(:team)) do
+      resolve(fn event, _, context ->
+        Resolvers.Teams.by_id(event, %{id: event.team_id}, context)
+      end)
+    end
   end
 
   @desc "A user"
