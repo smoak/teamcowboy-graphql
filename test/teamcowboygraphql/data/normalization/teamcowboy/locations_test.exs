@@ -5,6 +5,14 @@ defmodule TeamCowboyGraphQL.Data.Normalization.TeamCowboy.LocationsTest do
   alias TeamCowboyGraphQL.Data.TeamCowboy.Location
 
   describe ".normalize_location" do
+    test "when the location is nil" do
+      assert Locations.normalize_location(nil) == nil
+    end
+
+    test "when the location is empty" do
+      assert Locations.normalize_location(%{}) == nil
+    end
+
     test "it normalizes a location" do
       teamcowboy_location = %{
         "address" => %{

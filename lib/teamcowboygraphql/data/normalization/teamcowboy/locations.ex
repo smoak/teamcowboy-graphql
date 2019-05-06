@@ -3,11 +3,11 @@ defmodule TeamCowboyGraphQL.Data.Normalization.TeamCowboy.Locations do
 
   @type location() :: map()
 
-  @spec normalize_location(nil) :: nil
+  @spec normalize_location(nil | location()) :: Location.t() | nil
   def normalize_location(nil), do: nil
+  def normalize_location(location) when map_size(location) == 0, do: nil
 
-  @spec normalize_location(location()) :: Location.t()
-  def normalize_location(location) do
+  def normalize_location(location) when is_map(location) do
     %Location{
       location_id: location |> Map.get("locationId"),
       name: location |> Map.get("name"),
@@ -18,4 +18,6 @@ defmodule TeamCowboyGraphQL.Data.Normalization.TeamCowboy.Locations do
       is_public: location |> Map.get("visibility") == "public"
     }
   end
+
+  def normalize_location(_), do: nil
 end
