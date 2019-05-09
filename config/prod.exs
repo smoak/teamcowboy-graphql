@@ -3,7 +3,7 @@ use Mix.Config
 config :teamcowboygraphql, TeamCowboyGraphQLWeb.Endpoint, server: true
 
 config :cors_plug,
-  origin: ["https://team-cowgirl.surge.sh"],
+  origin: ["https://team-cowgirl.surge.sh", "https://leaguewrangler.com"],
   max_age: 86400,
   methods: ["GET", "POST"]
 
