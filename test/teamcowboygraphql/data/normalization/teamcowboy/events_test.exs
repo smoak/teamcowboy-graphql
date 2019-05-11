@@ -37,6 +37,29 @@ defmodule TeamCowboyGraphQL.Data.Normalization.TeamCowboy.EventsTest do
                team_id: 5
              }
     end
+
+    test "it replaces &nbsp; with a space in the title" do
+      teamcowboy_event = %{
+        "eventId" => 1,
+        "seasonId" => 5,
+        "seasonName" => "test",
+        "eventType" => "foo",
+        "status" => "bar",
+        "titleFull" => "title&nbsp;full",
+        "dateTimeInfo" => %{
+          "startDateTimeUtc" => "2019-02-20 07:16:49",
+          "endDateTimeUtc" => "2019-02-20 07:17:05"
+        },
+        "location" => nil,
+        "team" => %{
+          "teamId" => 5
+        }
+      }
+
+      title = Events.normalize_team_event(teamcowboy_event) |> Map.get(:title)
+
+      assert title == "title full"
+    end
   end
 
   describe ".normalize_team_events" do
