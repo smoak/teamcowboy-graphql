@@ -7,10 +7,11 @@ defmodule TeamCowboyGraphQL.Client.Team do
   @spec get_events(Client.t(), %{team_id: integer}) :: {:ok, list(map())} | {:error, binary}
   def get_events(client \\ %Client{}, %{team_id: team_id}) do
     params = %{
-      teamId: team_id
+      teamId: team_id |> Integer.to_string(),
+      method: "Team_GetEvents"
     }
 
-    request_params = RequestParameters.create("GET", "Team_GetEvents", params, client.auth)
+    request_params = RequestParameters.create(client, "GET", params)
 
     client |> get([], request_params) |> TeamCowboyResponse.process()
   end
@@ -18,10 +19,11 @@ defmodule TeamCowboyGraphQL.Client.Team do
   @spec get(Client.t(), %{team_id: integer}) :: {:ok, map()} | {:error, binary}
   def get(client \\ %Client{}, %{team_id: team_id}) do
     params = %{
-      teamId: team_id
+      teamId: team_id |> Integer.to_string(),
+      method: "Team_Get"
     }
 
-    request_params = RequestParameters.create("GET", "Team_Get", params, client.auth)
+    request_params = RequestParameters.create(client, "GET", params)
 
     client |> get([], request_params) |> TeamCowboyResponse.process()
   end

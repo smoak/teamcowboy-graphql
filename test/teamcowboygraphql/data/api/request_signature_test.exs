@@ -7,19 +7,15 @@ defmodule TeamCowboyGraphQL.Data.Api.RequestSignatureTest do
     test "it generates the correct signature" do
       sig =
         RequestSignature.create(
+          "413abdc2120adb9a06eb13cf76483aa25d18dc5a",
           "GET",
           "Team_Get",
-          %{
-            method: "Team_Get",
-            api_key: "b412e0601e179ad12df1a0ff5b8da12aafb74a3d",
-            teamId: "1234",
-            userToken: "0bd5a0ed9ff7f4c59e1854b63b341a8f",
-            nonce: "5646464564",
-            timestamp: "1296268551"
-          }
+          "1296268551",
+          "5646464564",
+          "api_key=b412e0601e179ad12df1a0ff5b8da12aafb74a3d&method=team_get&nonce=5646464564&teamId=1234&timestamp=1296268551&userToken=0bd5a0ed9ff7f4c59e1854b63b341a8f"
         )
 
-      assert sig == "cde63d18f2e4b906891bcfdcc0f47c7135412ad5"
+      assert sig == "420dbffb7136d0dab320a29d0d2e64ce8a27f7e7"
     end
   end
 end

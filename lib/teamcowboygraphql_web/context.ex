@@ -25,6 +25,14 @@ defmodule TeamCowboyGraphQLWeb.Context do
       Application.fetch_env!(:teamcowboygraphql, :teamcowboy_config)
       |> Keyword.fetch!(:public_api_key)
 
-    Client.new(%{api_key: public_api_key, access_token: auth_token})
+    private_api_key =
+      Application.fetch_env!(:teamcowboygraphql, :teamcowboy_config)
+      |> Keyword.fetch!(:private_api_key)
+
+    Client.new(%{
+      public_api_key: public_api_key,
+      private_api_key: private_api_key,
+      access_token: auth_token
+    })
   end
 end

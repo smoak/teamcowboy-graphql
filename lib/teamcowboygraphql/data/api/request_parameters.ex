@@ -4,32 +4,46 @@ defmodule TeamCowboyGraphQL.Data.Api.RequestParameters do
   """
   alias TeamCowboyGraphQL.Data.Api.RequestSignature
 
-  @doc """
-  Creates a map of required TeamCowboy request parameters
-  """
-  @spec create(String.t(), String.t(), map(), String.t() | nil) :: binary()
-  def create(http_method, api_method, extra_request_params \\ %{}, user_token \\ nil) do
-    api_key =
-      Application.fetch_env!(:teamcowboygraphql, :teamcowboy_config)
-      |> Keyword.fetch!(:public_api_key)
+  def create(
+        client,
+        http_method,
+        params,
+        generate_timestamp \\ &RequestSignature.generate_timestamp/0,
+        generate_nonce \\ &RequestSignature.generate_nonce/0,
+        create_signature \\ &RequestSignature.create/6
+      ) do
+    api_method = params |> Map.get(:method)
+    timestamp = generate_timestamp.()
+    nonce = generate_nonce.()
 
-    timestamp = :os.system_time(:second) |> Integer.to_string()
-    nonce = :os.system_time(:nanosecond) |> Integer.to_string()
+    request_params =
+      params
+      |> Map.merge(%{
+        api_key: client.public_api_key,
+        nonce: nonce,
+        timestamp: timestamp
+      })
+      |> with_user_token(client.auth)
 
-    params =
-      %{
-        method: api_method,
-        api_key: api_key,
-        timestamp: timestamp,
-        nonce: nonce
-      }
-      |> Map.merge(extra_request_params)
-      |> Map.merge(with_user_token(user_token))
+    request_param_body =
+      request_params
+      |> URI.encode_query()
+      |> String.replace("+", "%20")
+      |> String.downcase()
 
-    sig = RequestSignature.create(http_method, api_method, params)
-    params |> Map.merge(%{sig: sig})
+    sig =
+      create_signature.(
+        client.private_api_key,
+        http_method,
+        api_method,
+        timestamp,
+        nonce,
+        request_param_body
+      )
+
+    request_params |> Map.merge(%{sig: sig})
   end
 
-  defp with_user_token(nil), do: %{}
-  defp with_user_token(user_token), do: %{userToken: user_token}
+  defp with_user_token(m, nil), do: m
+  defp with_user_token(m, user_token), do: Map.merge(m, %{userToken: user_token})
 end

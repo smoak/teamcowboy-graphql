@@ -7,17 +7,22 @@ defmodule TeamCowboyGraphQL.Client.User do
   @spec get_teams(Client.t(), %{dashboard_only: boolean}) :: list(map())
   def get_teams(client \\ %Client{}, %{dashboard_only: dashboard_only}) do
     params = %{
-      dashboardTeamsOnly: dashboard_only
+      dashboardTeamsOnly: dashboard_only,
+      method: "User_GetTeams"
     }
 
-    body = RequestParameters.create("GET", "User_GetTeams", params, client.auth)
+    body = RequestParameters.create(client, "GET", params)
 
     client |> get([], body) |> TeamCowboyResponse.process()
   end
 
   @spec get(Client.t()) :: map()
   def get(client \\ %Client{}) do
-    body = RequestParameters.create("GET", "User_Get", %{}, client.auth)
+    params = %{
+      method: "User_Get"
+    }
+
+    body = RequestParameters.create(client, "GET", params)
 
     client |> get([], body) |> TeamCowboyResponse.process()
   end
@@ -25,10 +30,11 @@ defmodule TeamCowboyGraphQL.Client.User do
   @spec get_team_events(Client.t(), %{dashboard_only: boolean}) :: list(map())
   def get_team_events(client \\ %Client{}, %{dashboard_only: dashboard_only}) do
     params = %{
-      dashboardTeamsOnly: dashboard_only
+      dashboardTeamsOnly: dashboard_only,
+      method: "User_GetTeamEvents"
     }
 
-    body = RequestParameters.create("GET", "User_GetTeamEvents", params, client.auth)
+    body = RequestParameters.create(client, "GET", params)
 
     client |> get([], body) |> TeamCowboyResponse.process()
   end

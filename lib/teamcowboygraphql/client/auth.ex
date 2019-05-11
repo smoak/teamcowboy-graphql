@@ -2,21 +2,20 @@ defmodule TeamCowboyGraphQL.Client.Auth do
   import TeamCowboyGraphQL
   alias TeamCowboyGraphQL.Client
   alias TeamCowboyGraphQL.Data.Api.RequestParameters
+  alias TeamCowboyGraphQL.Data.Api.TeamCowboyResponse
 
   @type auth :: %{username: binary, password: binary}
 
   @spec get_user_token(Client.t(), auth) :: map()
-  def get_user_token(client \\ %Client{}, auth) do
-    body = RequestParameters.create("POST", "Auth_GetUserToken", auth) |> URI.encode_query()
+  def get_user_token(client \\ %Client{}, %{username: username, password: password}) do
+    params = %{
+      username: username,
+      password: password,
+      method: "Auth_GetUserToken"
+    }
 
-    client |> post(body) |> process_teamcowboy_response
-  end
+    body = RequestParameters.create(client, "POST", params) |> URI.encode_query()
 
-  defp process_teamcowboy_response({200, %{"body" => body}, _}), do: {:ok, body}
-
-  defp process_teamcowboy_response(
-         {400, %{"body" => %{"error" => %{"message" => error_message}}}, _}
-       ) do
-    {:error, error_message}
+    client |> post(body) |> TeamCowboyResponse.process()
   end
 end
