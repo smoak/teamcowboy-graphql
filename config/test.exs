@@ -12,5 +12,3 @@ config :logger, level: :warn
 config :teamcowboygraphql, :teamcowboy_config,
   private_api_key: "413abdc2120adb9a06eb13cf76483aa25d18dc5a",
   public_api_key: "foo"
-
-config :teamcowboygraphql, :auth_client, TeamCowboyGraphQL.Test.Stub.Auth

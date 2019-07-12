@@ -81,7 +81,7 @@ defmodule TeamCowboyGraphQL.Data.Normalization.TeamCowboy.EventsTest do
 
       title = teamcowboy_event |> Events.normalize_team_event() |> Map.get(:title)
 
-      assert title == "title & full" 
+      assert title == "title & full"
     end
   end
 
