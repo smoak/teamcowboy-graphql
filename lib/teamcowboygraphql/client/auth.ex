@@ -14,7 +14,7 @@ defmodule TeamCowboyGraphQL.Client.Auth do
       method: "Auth_GetUserToken"
     }
 
-    body = RequestParameters.create(client, "POST", params) |> URI.encode_query()
+    body = client |> RequestParameters.create("POST", params) |> URI.encode_query()
 
     client |> post(body) |> TeamCowboyResponse.process()
   end
