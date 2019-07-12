@@ -6,12 +6,14 @@ defmodule TeamCowboyGraphQLWeb.Resolvers.Users do
   alias TeamCowboyGraphQL.Data.Normalization.TeamCowboy.Users
   alias TeamCowboyGraphQL.Data.Normalization.TeamCowboy.Events
 
+  @auth_client Application.get_env(:teamcowboygraphql, :auth_client, Auth)
+
   @type context :: %{context: %{client: TeamCowboyGraphQL.Client.t()}}
 
   @spec create_token(map(), %{username: String.t(), password: String.t()}, context) ::
           {:ok, UserToken.t()} | {:error, binary}
   def create_token(_parent, %{username: _, password: _} = params, %{context: %{client: client}}) do
-    case Auth.get_user_token(client, params) do
+    case @auth_client.get_user_token(client, params) do
       {:ok, %{"token" => token, "userId" => _}} -> {:ok, %UserToken{token: token}}
       {:error, msg} -> {:error, msg}
       _ -> {:error, "Unknown error"}
