@@ -18,7 +18,7 @@ defmodule TeamCowboyGraphQL.Data.Normalization.TeamCowboy.Events do
       season_name: event |> Map.get("seasonName"),
       event_type: event |> Map.get("eventType"),
       status: event |> Map.get("status"),
-      title: event |> Map.get("titleFull") |> String.replace("&nbsp;", " "),
+      title: event |> Map.get("titleFull") |> sanitize_title(),
       location: Locations.normalize_location(event |> Map.get("location")),
       start_timestamp:
         event
@@ -45,5 +45,12 @@ defmodule TeamCowboyGraphQL.Data.Normalization.TeamCowboy.Events do
       |> DateTime.from_iso8601()
 
     date |> DateTime.to_unix()
+  end
+
+  @spec sanitize_title(String.t()) :: String.t()
+  defp sanitize_title(title) do
+    title
+    |> String.replace("&nbsp;", " ")
+    |> String.replace("&amp;", "&")
   end
 end

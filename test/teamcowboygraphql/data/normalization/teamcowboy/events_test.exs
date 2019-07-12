@@ -56,9 +56,32 @@ defmodule TeamCowboyGraphQL.Data.Normalization.TeamCowboy.EventsTest do
         }
       }
 
-      title = Events.normalize_team_event(teamcowboy_event) |> Map.get(:title)
+      title = teamcowboy_event |> Events.normalize_team_event() |> Map.get(:title)
 
       assert title == "title full"
+    end
+
+    test "it replaces &amp; in the title with a &" do
+      teamcowboy_event = %{
+        "eventId" => 1,
+        "seasonId" => 5,
+        "seasonName" => "test",
+        "eventType" => "foo",
+        "status" => "bar",
+        "titleFull" => "title &amp; full",
+        "dateTimeInfo" => %{
+          "startDateTimeUtc" => "2019-02-20 07:16:49",
+          "endDateTimeUtc" => "2019-02-20 07:17:05"
+        },
+        "location" => nil,
+        "team" => %{
+          "teamId" => 5
+        }
+      }
+
+      title = teamcowboy_event |> Events.normalize_team_event() |> Map.get(:title)
+
+      assert title == "title & full" 
     end
   end
 
