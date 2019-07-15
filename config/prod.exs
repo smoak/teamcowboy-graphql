@@ -12,5 +12,4 @@ config :logger,
   handle_sasl_reports: true,
   handle_otp_reports: true
 
-config :absinthe, Absinthe.Logger,
-  filter_variables: ["token", "password", "secret"]
+config :absinthe, Absinthe.Logger, filter_variables: ["token", "password", "secret"]

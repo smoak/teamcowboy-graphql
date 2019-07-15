@@ -5,6 +5,15 @@ defmodule TeamCowboyGraphQLWeb.Schema do
 
   import_types(Absinthe.Type.Custom)
 
+  @desc "The RSVP status of a user"
+  enum :rsvp_status do
+    value(:yes, as: :yes, description: "Indicates the user will attend")
+    value(:no, as: :no, description: "Indicates the user will not attend")
+    value(:maybe, as: :maybe, description: "Indicates the user might attend")
+    value(:available, as: :available, description: "Indicates the user is available to attend")
+    value(:none, as: :none, description: "Indicates the user has not RSVPed")
+  end
+
   @desc "A team"
   object :team do
     field(:team_id, non_null(:integer))
@@ -36,6 +45,10 @@ defmodule TeamCowboyGraphQLWeb.Schema do
     field(:location, :location)
     field(:start_timestamp, :integer)
     field(:end_timestamp, :integer)
+
+    field(:viewer_rsvp_status, non_null(:rsvp_status)) do
+      resolve(&Resolvers.ViewerRsvpStatus.from_event/3)
+    end
 
     field(:team, non_null(:team)) do
       resolve(fn event, _, context ->
