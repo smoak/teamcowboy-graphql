@@ -48,7 +48,6 @@ defmodule TeamCowboyGraphQL.MixProject do
       {:httpoison, "~> 1.4"},
       {:ex_doc, "~> 0.19", only: :dev, runtime: false},
       {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
-      {:distillery, "~> 2.0"},
       {:excoveralls, "~> 0.10", only: :test},
       {:cors_plug, "~> 2.0"}
     ]
