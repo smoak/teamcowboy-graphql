@@ -32,7 +32,6 @@ defmodule TeamCowboyGraphQL.Client.Event do
       |> SaveRsvpParams.with_event_id(event_id)
       |> SaveRsvpParams.with_status(status)
       |> SaveRsvpParams.with_comments(comments)
-      |> IO.inspect
 
     body = client |> RequestParameters.create("POST", params) |> URI.encode_query()
 
