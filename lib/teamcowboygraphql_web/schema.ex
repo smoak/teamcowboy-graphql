@@ -114,5 +114,22 @@ defmodule TeamCowboyGraphQLWeb.Schema do
 
       resolve(&Resolvers.Users.create_token/3)
     end
+
+    @desc "RSVP to an event"
+    field :save_rsvp, type: non_null(:boolean) do
+      @desc "Id of the team that the event is associated with."
+      arg(:team_id, non_null(:integer))
+
+      @desc "Id of the event to rsvp to."
+      arg(:event_id, non_null(:integer))
+
+      @desc "The RSVP status to save."
+      arg(:rsvp_status, non_null(:rsvp_status))
+
+      @desc "RSVP comments."
+      arg(:comments, :string)
+
+      resolve(&Resolvers.Events.save_rsvp/3)
+    end
   end
 end
