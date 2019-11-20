@@ -116,7 +116,7 @@ defmodule TeamCowboyGraphQLWeb.Schema do
     end
 
     @desc "RSVP to an event"
-    field :save_rsvp, type: non_null(:boolean) do
+    field :save_rsvp, type: non_null(:event) do
       @desc "Id of the team that the event is associated with."
       arg(:team_id, non_null(:integer))
 

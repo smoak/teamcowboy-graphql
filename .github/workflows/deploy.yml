@@ -14,3 +14,5 @@ jobs:
         with:
           otp-version: 22.x
           elixir-version: 1.9.x
+      - name: Install Deps
+        run: mix deps.get

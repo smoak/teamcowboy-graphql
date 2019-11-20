@@ -6,6 +6,7 @@
     "lib/teamcowboygraphql_web/router.ex",
     "lib/teamcowboygraphql_web.ex",
     "lib/teamcowboygraphql_web/endpoint.ex",
-    "lib/teamcowboygraphql/data/teamcowboy"
+    "lib/teamcowboygraphql/data/teamcowboy",
+    "test/"
   ]
 }

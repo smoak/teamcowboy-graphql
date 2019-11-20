@@ -18,10 +18,23 @@ defmodule TeamCowboyGraphQLWeb.Resolvers.Events do
     end
   end
 
+  @spec get(any, map(), map()) :: {:ok, Event.t()} | {:error, binary}
+  def get(_parent, args, %{context: %{client: client}}) do
+    fetch_event(client, args)
+  end
+
   @spec save_rsvp(any, map(), map()) :: {:ok, boolean()} | {:error, binary}
   def save_rsvp(_parent, args, %{context: %{client: client}}) do
     case EventClient.save_rsvp(client, args) do
-      {:ok, response} -> {:ok, response |> Map.get("rsvpSaved")}
+      {:ok, _} -> fetch_event(client, args)
+      {:error, msg} -> {:error, msg}
+      _ -> {:error, "Unknown error"}
+    end
+  end
+
+  defp fetch_event(client, args) do
+    case EventClient.get_event(client, args) do
+      {:ok, raw_event} -> {:ok, Events.normalize_team_event(raw_event)}
       {:error, msg} -> {:error, msg}
       _ -> {:error, "Unknown error"}
     end
