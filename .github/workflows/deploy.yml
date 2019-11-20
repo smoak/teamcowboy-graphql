@@ -3,40 +3,41 @@ on: push
 jobs:
   build:
     runs-on: ubuntu-latest
-    - name: Checkout
-      uses: actions/checkout@v1.0.0
-    - name: Setup Elixir
-      uses: actions/setup-elixir@v1.0.0
-      with:
-        otp-version: 22.x
-        elixir-version: 1.9.x
-    - name: Install Deps
-      run: mix deps.get
-    - name: Lint
-      run: |
-        mix format --check-formatted
-        mix credo --ignore readability --strict
-      env:
-        MIX_ENV: test
-    - name: Test
-      run: mix test --cover
-      env:
-        MIX_ENV: test
-    - name: Build Relase
-      if: success()
-      env:
-        TC_PUBLIC_API_KEY: ${{ secrets.TC_PUBLIC_API_KEY }}
-        TC_PRIVATE_API_KEY: ${{ secrets.TC_PRIVATE_API_KEY }}
-        MIX_ENV: prod
-    - name: Deploy
-        if: success()
-        uses: crazy-max/ghaction-github-pages@v1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1.0.0
+      - name: Setup Elixir
+        uses: actions/setup-elixir@v1.0.0
         with:
-          target_branch: production
-          build_dir: _build/prod
-          keep_history: true
-          allow_empty_commit: false
-          commit_message: "Production deploy"
+          otp-version: 22.x
+          elixir-version: 1.9.x
+      - name: Install Deps
+        run: mix deps.get
+      - name: Lint
+        run: |
+          mix format --check-formatted
+          mix credo --ignore readability --strict
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        
+          MIX_ENV: test
+      - name: Test
+        run: mix test --cover
+        env:
+          MIX_ENV: test
+      - name: Build Relase
+        if: success()
+        env:
+          TC_PUBLIC_API_KEY: ${{ secrets.TC_PUBLIC_API_KEY }}
+          TC_PRIVATE_API_KEY: ${{ secrets.TC_PRIVATE_API_KEY }}
+          MIX_ENV: prod
+      - name: Deploy
+          if: success()
+          uses: crazy-max/ghaction-github-pages@v1
+          with:
+            target_branch: production
+            build_dir: _build/prod
+            keep_history: true
+            allow_empty_commit: false
+            commit_message: "Production deploy"
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
