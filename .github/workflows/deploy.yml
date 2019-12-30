@@ -16,3 +16,13 @@ jobs:
         with:
           otp-version: 22.x
           elixir-version: 1.9.x
+      - name: Install Deps
+        run: mix deps.get
+      - name: Lint
+        run: |
+          mix format --check-formatted
+          mix credo --ignore readability --strict
+      - name: Test
+        run: mix test --cover
+        env:
+          MIX_ENV: test

@@ -4,11 +4,11 @@ defmodule TeamCowboyGraphQL.Repos.Events do
   alias TeamCowboyGraphQL.Data.Normalization.TeamCowboy.Events, as: EventsNormalizer
 
   def find(client, args) do
-    EventsFetcher.event_get(client, args) |> normalize
+    client |> EventsFetcher.event_get(args) |> normalize
   end
 
   defp normalize({:ok, event}) do
-    {:ok, event |> EventsNormalizer.normalize_team_event}
+    {:ok, event |> EventsNormalizer.normalize_team_event()}
   end
 
   defp normalize({:error, msg}) do
