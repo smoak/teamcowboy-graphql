@@ -38,7 +38,7 @@ defmodule TeamCowboyGraphQLWeb.Schema do
   object :event do
     field(:event_id, non_null(:integer))
     field(:season_id, non_null(:integer))
-    field(:season_name, non_null(:string))
+    field(:season_name, :string)
     field(:event_type, non_null(:string))
     field(:status, non_null(:string))
     field(:title, non_null(:string))

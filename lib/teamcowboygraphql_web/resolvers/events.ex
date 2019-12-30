@@ -3,7 +3,6 @@ defmodule TeamCowboyGraphQLWeb.Resolvers.Events do
   alias TeamCowboyGraphQL.Data.Normalization.TeamCowboy.Events
   alias TeamCowboyGraphQL.Client
   alias TeamCowboyGraphQL.Client.Team
-  alias TeamCowboyGraphQL.Client.Event, as: EventClient
   alias TeamCowboyGraphQL.Repos.Events, as: EventsRepo
 
   @spec list(any, map(), map()) :: {:ok, list(Event.t())} | {:error, binary}
@@ -25,8 +24,8 @@ defmodule TeamCowboyGraphQLWeb.Resolvers.Events do
 
   @spec save_rsvp(any, map(), map()) :: {:ok, Event.t()} | {:error, binary}
   def save_rsvp(_parent, args, %{context: %{client: client}}) do
-    case EventClient.save_rsvp(client, args) do
-      {:ok, response} -> {:ok, response |> Map.get("rsvpSaved")}
+    case EventsRepo.update(client, args) do
+      {:ok, _} -> EventsRepo.find(client, args)
       {:error, msg} -> {:error, msg}
       _ -> {:error, "Unknown error"}
     end

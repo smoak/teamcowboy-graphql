@@ -7,6 +7,10 @@ defmodule TeamCowboyGraphQL.Repos.Events do
     client |> EventsFetcher.event_get(args) |> normalize
   end
 
+  def update(client, args) do
+    client |> EventsSaver.event_save(args)
+  end
+
   defp normalize({:ok, event}) do
     {:ok, event |> EventsNormalizer.normalize_team_event()}
   end
