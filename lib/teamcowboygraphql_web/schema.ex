@@ -95,7 +95,7 @@ defmodule TeamCowboyGraphQLWeb.Schema do
     @desc "Get events for a team"
     field :events, non_null(list_of(:event)) do
       @desc "Id of the team to retrieve events for."
-      arg(:team_id, :integer)
+      arg(:team_id, non_null(:integer))
 
       resolve(&Resolvers.Events.list/3)
     end
@@ -103,6 +103,17 @@ defmodule TeamCowboyGraphQLWeb.Schema do
     @desc "Gets the current user"
     field :current_user, non_null(:user) do
       resolve(&Resolvers.Users.get/3)
+    end
+
+    @desc "Get a single event"
+    field :event, :event do
+      @desc "Id of the team to retrieve the event for."
+      arg(:team_id, non_null(:integer))
+
+      @desc "Id of the event to retrieve."
+      arg(:event_id, non_null(:integer))
+
+      resolve(&Resolvers.Events.get/3)
     end
   end
 
@@ -116,7 +127,7 @@ defmodule TeamCowboyGraphQLWeb.Schema do
     end
 
     @desc "RSVP to an event"
-    field :save_rsvp, type: non_null(:boolean) do
+    field :save_rsvp, type: non_null(:event) do
       @desc "Id of the team that the event is associated with."
       arg(:team_id, non_null(:integer))
 
