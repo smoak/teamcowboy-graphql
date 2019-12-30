@@ -26,6 +26,7 @@ jobs:
           MIX_ENV: test
       - name: Build Relase
         if: success()
+        run: mix release
         env:
           TC_PUBLIC_API_KEY: ${{ secrets.TC_PUBLIC_API_KEY }}
           TC_PRIVATE_API_KEY: ${{ secrets.TC_PRIVATE_API_KEY }}
