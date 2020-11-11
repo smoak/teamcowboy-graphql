@@ -33,7 +33,7 @@ jobs:
           MIX_ENV: prod
       - name: Deploy
         if: success()
-        uses: crazy-max/ghaction-github-pages@v2
+        uses: crazy-max/ghaction-github-pages@master
         with:
           target_branch: production
           build_dir: _build/prod
