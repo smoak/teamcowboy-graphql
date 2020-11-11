@@ -3,7 +3,7 @@ defmodule TeamCowboyGraphQL do
   alias TeamCowboyGraphQL.Client
 
   @default_headers [{"User-agent", "teamcowboy-graphql"}]
-  @default_options [follow_redirect: true]
+  @default_options [follow_redirect: true, ssl: [{:versions, [:"tlsv1.2"]}], recv_timeout: 500]
 
   @spec process_response_body(binary) :: term
   def process_response_body(""), do: nil
@@ -23,7 +23,7 @@ defmodule TeamCowboyGraphQL do
     raw_request(:get, client.endpoint, "", headers, params: params)
   end
 
-  defp raw_request(method, url, body \\ "", headers \\ [], options \\ []) do
+  defp raw_request(method, url, body, headers, options \\ []) do
     method
     |> request!(url, body, @default_headers ++ headers, @default_options ++ options)
   end
