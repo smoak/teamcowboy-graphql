@@ -40,5 +40,6 @@ jobs:
           keep_history: true
           allow_empty_commit: false
           commit_message: "Production deploy"
+          jekyll: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
