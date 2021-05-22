@@ -37,7 +37,7 @@ if not "!REL_GOTO!" == "" (
   findstr "RUNTIME_CONFIG=true" "!RELEASE_SYS_CONFIG!.config" >nul 2>&1 && (
     for /f "skip=1" %%X in ('wmic os get localdatetime') do if not defined TIMESTAMP set TIMESTAMP=%%X
     set RELEASE_SYS_CONFIG=!RELEASE_TMP!\!RELEASE_NAME!-!RELEASE_VSN!-!TIMESTAMP:~0,11!-!RANDOM!.runtime
-    mkdir "!RELEASE_TMP!" >nul
+    mkdir "!RELEASE_TMP!" >nul 2>&1
     copy /y "!REL_VSN_DIR!\sys.config" "!RELEASE_SYS_CONFIG!.config" >nul || (
       echo Cannot start release because it could not write to "!RELEASE_SYS_CONFIG!.config"
       goto end
@@ -130,7 +130,8 @@ if exist !RELEASE_ROOT!\erts-!ERTS_VSN! (
 )
 
 !ERLSRV! add !RELEASE_NAME!_!RELEASE_NAME! ^
-  -name "!RELEASE_NODE!" ^
+  -!RELEASE_DISTRIBUTION! "!RELEASE_NODE!" ^
+  -env RELEASE_ROOT=!RELEASE_ROOT! -env RELEASE_NAME=!RELEASE_NAME! -env RELEASE_VSN=!RELEASE_VSN! -env RELEASE_COOKIE=!RELEASE_COOKIE! -env RELEASE_NODE=!RELEASE_NODE! -env RELEASE_VM_ARGS=!RELEASE_VM_ARGS! -env RELEASE_TMP=!RELEASE_TMP! -env RELEASE_SYS_CONFIG=!RELEASE_SYS_CONFIG! ^
   -args "-setcookie !RELEASE_COOKIE! -config !RELEASE_SYS_CONFIG! -mode !RELEASE_MODE! -boot !REL_VSN_DIR!\start -boot_var RELEASE_LIB !RELEASE_ROOT!\lib -args_file !REL_VSN_DIR!\vm.args"
 
 if %ERRORLEVEL% EQU 0 (

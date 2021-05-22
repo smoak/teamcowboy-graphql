@@ -26,6 +26,7 @@
                         'Elixir.TeamCowboyGraphQL.Data.TeamCowboy.UserToken',
                         'Elixir.TeamCowboyGraphQL.Fetchers.Events',
                         'Elixir.TeamCowboyGraphQL.Repos.Events',
+                        'Elixir.TeamCowboyGraphQL.Savers.Events',
                         'Elixir.TeamCowboyGraphQLWeb',
                         'Elixir.TeamCowboyGraphQLWeb.Context',
                         'Elixir.TeamCowboyGraphQLWeb.Endpoint',
