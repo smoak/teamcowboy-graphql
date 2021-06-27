@@ -24,7 +24,7 @@ defmodule TeamCowboyGraphQLWeb.Resolvers.Teams do
     do: {:error, "No authorization header"}
 
   def by_id(_, %{id: id}, %{context: %{client: client}}) do
-    Logger.debug("Resolving a team by id. Team Id: #{id}")
+    Logger.debug(fn -> "Resolving a team by id. Team Id: #{id}" end)
 
     case TeamClient.get(client, %{team_id: id}) do
       {:ok, raw_team} -> {:ok, Teams.normalize_user_team(raw_team)}

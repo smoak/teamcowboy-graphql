@@ -27,10 +27,15 @@ defmodule TeamCowboyGraphQL.Client.User do
     client |> get([], body) |> TeamCowboyResponse.process()
   end
 
-  @spec get_team_events(Client.t(), %{dashboard_only: boolean}) :: list(map())
-  def get_team_events(client \\ %Client{}, %{dashboard_only: dashboard_only}) do
+  @spec get_team_events(Client.t(), %{dashboard_only: boolean, include_rsvp_info: boolean}) ::
+          list(map())
+  def get_team_events(client \\ %Client{}, %{
+        dashboard_only: dashboard_only,
+        include_rsvp_info: include_rsvp_info
+      }) do
     params = %{
       dashboardTeamsOnly: dashboard_only,
+      includeRSVPInfo: include_rsvp_info,
       method: "User_GetTeamEvents"
     }
 

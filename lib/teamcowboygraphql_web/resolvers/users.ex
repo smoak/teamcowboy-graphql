@@ -5,6 +5,7 @@ defmodule TeamCowboyGraphQLWeb.Resolvers.Users do
   alias TeamCowboyGraphQL.Client.User, as: UserClient
   alias TeamCowboyGraphQL.Data.Normalization.TeamCowboy.Users
   alias TeamCowboyGraphQL.Data.Normalization.TeamCowboy.Events
+  require Logger
 
   @type context :: %{context: %{client: TeamCowboyGraphQL.Client.t()}}
 
@@ -41,8 +42,16 @@ defmodule TeamCowboyGraphQLWeb.Resolvers.Users do
     {:error, "No authorization header"}
   end
 
-  def events(_parent, params, %{context: %{client: client}}) do
-    case UserClient.get_team_events(client, params) do
+  def events(_parent, params, %{context: %{client: client}} = res) do
+    include_rsvp_info =
+      res
+      |> Absinthe.Resolution.project()
+      |> Enum.any?(fn %{name: name} -> name == "viewerRsvpStatus" end)
+
+    case UserClient.get_team_events(
+           client,
+           params |> Map.merge(%{include_rsvp_info: include_rsvp_info})
+         ) do
       {:ok, raw_events} -> {:ok, Events.normalize_team_events(raw_events)}
       {:error, msg} -> {:error, msg}
       _ -> {:error, "Unknown error"}

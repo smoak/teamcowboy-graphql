@@ -63,7 +63,7 @@ defmodule TeamCowboyGraphQLWeb.Schema do
     field(:viewer_rsvp_status, non_null(:rsvp_status))
 
     field(:team, non_null(:team)) do
-      resolve(fn %{team_id: id} = event, _, %{context: %{loader: loader}} ->
+      resolve(fn %{team_id: id}, _, %{context: %{loader: loader}} ->
         loader
         |> Dataloader.load(Loaders.Teams, {:team, id}, id)
         |> on_load(fn loader ->

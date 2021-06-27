@@ -10,7 +10,7 @@ defmodule TeamCowboyGraphQLWeb.Loaders.Teams do
 
   # batch_key, args
   def fetch({:team, _}, ids, context) do
-    Logger.debug("Fetching a team from the KV Dataloader.")
+    Logger.debug(fn -> "Fetching a team from the KV Dataloader." end)
 
     ids
     |> Enum.reduce(%{}, fn id, result ->
@@ -21,7 +21,7 @@ defmodule TeamCowboyGraphQLWeb.Loaders.Teams do
   end
 
   defp find_team(event, id, context) do
-    Logger.debug("Cache miss for teamId: #{id}, so finding via resolver")
+    Logger.debug(fn -> "Cache miss for teamId: #{id}, so finding via resolver" end)
     Teams.by_id(event, %{id: id}, %{context: context})
   end
 end
