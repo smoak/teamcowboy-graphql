@@ -1,0 +1,154 @@
+{
+  "success": true,
+  "requestSecs": 0.23121094703674,
+  "body": {
+    "eventId": 1785791,
+    "team": {
+      "teamId": 16461,
+      "name": "Monarchs 5B"
+    },
+    "seasonId": 78028,
+    "seasonName": null,
+    "eventType": "game",
+    "eventTypeDisplay": "Game",
+    "status": "active",
+    "statusDisplay": "Active",
+    "personNounSingular": "player",
+    "personNounPlural": "players",
+    "title": "TBD",
+    "titleFull": "Monarchs 5B (Away)&nbsp;vs.&nbsp;TBD",
+    "titleLabel": "Opponent",
+    "homeAway": "Away",
+    "result": {
+      "scoreEntered": false,
+      "outcome": "unknown",
+      "score1": null,
+      "score2": null,
+      "isWin": false,
+      "isTie": false,
+      "isLoss": false,
+      "scoreDisplay": "",
+      "dhScoreEntered": false,
+      "dhOutcome": "unknown",
+      "dhScore1": null,
+      "dhScore2": null,
+      "dhIsWin": false,
+      "dhIsTie": false,
+      "dhIsLoss": false,
+      "dhScoreDisplay": ""
+    },
+    "rsvpInstances": [
+      {
+        "userId": 245667,
+        "displayName": "Your RSVP",
+        "teamMemberType": {
+          "name": "custom_11651",
+          "titleLongSingular": "Defense",
+          "titleLongPlural": "Defense",
+          "titleShortSingular": "Defense",
+          "titleShortPlural": "Defense",
+          "showTeamMembersOnRoster": true,
+          "showTeamMembersOnAttList": true,
+          "showTitleOnAttList": true
+        },
+        "rsvpDetails": {
+          "allowRSVP": true,
+          "allowRsvpRemoval": true,
+          "allowExtraPlayers": true,
+          "allowedStatues": [
+            "yes",
+            "maybe",
+            "no"
+          ],
+          "allowedStatuses": [
+            "yes",
+            "maybe",
+            "no"
+          ],
+          "allowedStatusesDisplay": [
+            {
+              "status": "playing",
+              "statusDisplay": "Playing"
+            },
+            {
+              "status": "tentative",
+              "statusDisplay": "Maybe playing"
+            },
+            {
+              "status": "notplaying",
+              "statusDisplay": "Not playing"
+            }
+          ],
+          "status": "yes",
+          "statusDisplay": "Playing",
+          "statusDisplayShort": "Playing",
+          "addlMale": 0,
+          "addlMaleDisplay": "",
+          "addlFemale": 0,
+          "addlFemaleDisplay": "",
+          "comments": ""
+        }
+      }
+    ],
+    "comments": "Away (red)",
+    "options": {
+      "misc": {
+        "allowRSVPs": true
+      },
+      "rsvp": {
+        "limitTotalYesRSVPs": "teamDefault",
+        "limitTotalYesRSVPs_gender_f_value": "",
+        "limitTotalYesRSVPs_gender_m_value": "",
+        "limitTotalYesRSVPs_gender_other_value": "",
+        "limitTotalYesRSVPs_mode": "total",
+        "limitTotalYesRSVPs_total_value": ""
+      }
+    },
+    "oneLineDisplay": "May 24, 2021 9:25pm (Monday): Away vs. TBD",
+    "oneLineDisplayShort": "May 24, 2021 9:25pm - Away vs. TBD",
+    "maleGenderDisplay": "Men",
+    "femaleGenderDisplay": "Women",
+    "otherGenderDisplay": "Not specified",
+    "dateTimeInfo": {
+      "timezoneId": "US/Pacific",
+      "startDateLocal": "2021-05-24",
+      "startTimeLocal": "21:25:00",
+      "startDateTimeLocal": "2021-05-24 21:25:00",
+      "startDateLocalDisplay": "May 24, 2021",
+      "startTimeLocalDisplay": "9:25pm",
+      "startDateTimeLocalDisplay": "May 24, 2021 9:25pm",
+      "startDateTimeUtc": "2021-05-25 04:25:00",
+      "startTimeTBD": false,
+      "endDateLocal": "2021-05-24",
+      "endTimeLocal": "23:25:00",
+      "endDateTimeLocal": "2021-05-24 23:25:00",
+      "endDateLocalDisplay": "May 24, 2021",
+      "endTimeLocalDisplay": "",
+      "endDateTimeLocalDisplay": "May 24, 2021 ",
+      "endDateTimeUtc": "2021-05-25 06:25:00",
+      "endTimeTBD": false,
+      "inPast": false,
+      "inFuture": true
+    },
+    "location": null,
+    "shirtColors": {
+      "team1": {
+        "title": "Red",
+        "colorCount": 1,
+        "colors": [
+          {
+            "name": "Red",
+            "hexCode": "#FF0000"
+          }
+        ]
+      },
+      "team2": null
+    },
+    "userMetaInfo": {
+      "isTeamAdmin": false,
+      "showOnDashboard": true
+    },
+    "dateCreatedUtc": "2021-05-20 14:40:02",
+    "dateLastUpdatedUtc": "2021-05-20 14:40:02"
+  }
+}

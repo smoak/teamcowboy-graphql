@@ -8,8 +8,13 @@ defmodule TeamCowboyGraphQL.Application do
   def start(_type, _args) do
     # List all child processes to be supervised
     children = [
-      # Start the endpoint when the application starts
+      # Start the Telemetry supervisor
+      TeamCowboyGraphQLWeb.Telemetry,
+      # Start the PubSub system
+      {Phoenix.PubSub, [name: TeamCowboyGraphQL.PubSub, adapter: Phoenix.PubSub.PG2]},
+      # Start the Endpoint (http/https)
       TeamCowboyGraphQLWeb.Endpoint
+
       # Starts a worker by calling: TeamCowboyGraphQL.Worker.start_link(arg)
       # {TeamCowboyGraphQL.Worker, arg},
     ]

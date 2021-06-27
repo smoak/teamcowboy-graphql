@@ -5,7 +5,7 @@ defmodule TeamCowboyGraphQL.MixProject do
     [
       app: :teamcowboygraphql,
       version: "0.1.0",
-      elixir: "~> 1.5",
+      elixir: "~> 1.9",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -39,13 +39,15 @@ defmodule TeamCowboyGraphQL.MixProject do
   defp deps do
     [
       {:phoenix, "~> 1.5"},
-      {:phoenix_pubsub, "~> 2.0"},
+      {:dataloader, "~> 1.0"},
+      {:telemetry_metrics, "~> 0.4"},
+      {:telemetry_poller, "~> 0.4"},
       {:absinthe_plug, "~> 1.4"},
       {:poison, "~> 2.1"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.1"},
-      {:httpoison, "~> 1.4"},
+      {:httpoison, "~> 1.8"},
       {:ex_doc, "~> 0.19", only: :dev, runtime: false},
       {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.10", only: :test},

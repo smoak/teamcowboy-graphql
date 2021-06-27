@@ -3,6 +3,14 @@ defmodule TeamCowboyGraphQL.Data.Normalization.TeamCowboy.Events do
 
   alias TeamCowboyGraphQL.Data.Normalization.TeamCowboy.Locations
 
+  @server_rsvp_status_map %{
+    "yes" => :yes,
+    "maybe" => :maybe,
+    "available" => :available,
+    "no" => :no,
+    "noresponse" => :none
+  }
+
   @type event() :: map()
 
   @spec normalize_team_events(list(event())) :: list(Event.t())
@@ -20,6 +28,7 @@ defmodule TeamCowboyGraphQL.Data.Normalization.TeamCowboy.Events do
       status: event |> Map.get("status"),
       title: event |> Map.get("titleFull") |> sanitize_title(),
       location: Locations.normalize_location(event |> Map.get("location")),
+      viewer_rsvp_status: event |> Map.get("rsvpInstances") |> normalize_viewer_rsvp_status(),
       start_timestamp:
         event
         |> Map.get("dateTimeInfo")
@@ -32,6 +41,18 @@ defmodule TeamCowboyGraphQL.Data.Normalization.TeamCowboy.Events do
         |> normalize_date_time_info(),
       team_id: event |> Map.get("team") |> Map.get("teamId")
     }
+  end
+
+  def normalize_viewer_rsvp_status(nil), do: @server_rsvp_status_map |> Map.get("noresponse")
+
+  def normalize_viewer_rsvp_status(rsvp_instances) do
+    server_rsvp_status =
+      rsvp_instances
+      |> List.first()
+      |> Map.get("rsvpDetails")
+      |> Map.get("status")
+
+    @server_rsvp_status_map |> Map.get(server_rsvp_status)
   end
 
   defp normalize_date_time_info(nil), do: nil

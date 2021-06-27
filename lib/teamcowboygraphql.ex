@@ -3,15 +3,18 @@ defmodule TeamCowboyGraphQL do
   alias TeamCowboyGraphQL.Client
 
   @default_headers [{"User-agent", "teamcowboy-graphql"}]
-  @default_options [follow_redirect: true, ssl: [{:versions, [:"tlsv1.2"]}], recv_timeout: 500]
-
-  @spec process_response_body(binary) :: term
-  def process_response_body(""), do: nil
-  def process_response_body(body), do: Poison.decode!(body)
+  @default_options [
+    follow_redirect: true,
+    ssl: [{:versions, [:"tlsv1.2"]}],
+    recv_timeout: 1000,
+    hackney: [pool: :default]
+  ]
 
   @spec process_response(HTTPoison.Response.t()) :: {integer, any, HTTPoison.Response.t()}
+  def process_response(%HTTPoison.Response{status_code: 403} = resp), do: {403, "", resp}
+
   def process_response(%HTTPoison.Response{status_code: status_code, body: body} = resp),
-    do: {status_code, body, resp}
+    do: {status_code, Poison.decode!(body), resp}
 
   @spec post(Client.t(), binary, keyword) :: {integer, any, HTTPoison.Response.t()}
   def post(client, body \\ "", headers \\ [{"Content-Type", "application/x-www-form-urlencoded"}]) do

@@ -2,8 +2,23 @@ defmodule TeamCowboyGraphQLWeb.Schema do
   use Absinthe.Schema
 
   alias TeamCowboyGraphQLWeb.Resolvers
+  alias TeamCowboyGraphQLWeb.Loaders
+
+  import Absinthe.Resolution.Helpers
 
   import_types(Absinthe.Type.Custom)
+
+  def plugins do
+    [Absinthe.Middleware.Dataloader] ++ Absinthe.Plugin.defaults()
+  end
+
+  def context(ctx) do
+    loader =
+      Dataloader.new(get_policy: :return_nil_on_error)
+      |> Dataloader.add_source(Loaders.Teams, Loaders.Teams.data(ctx))
+
+    Map.put(ctx, :loader, loader)
+  end
 
   @desc "The RSVP status of a user"
   enum :rsvp_status do
@@ -45,14 +60,16 @@ defmodule TeamCowboyGraphQLWeb.Schema do
     field(:location, :location)
     field(:start_timestamp, :integer)
     field(:end_timestamp, :integer)
-
-    field(:viewer_rsvp_status, non_null(:rsvp_status)) do
-      resolve(&Resolvers.ViewerRsvpStatus.from_event/3)
-    end
+    field(:viewer_rsvp_status, non_null(:rsvp_status))
 
     field(:team, non_null(:team)) do
-      resolve(fn event, _, context ->
-        Resolvers.Teams.by_id(event, %{id: event.team_id}, context)
+      resolve(fn %{team_id: id} = event, _, %{context: %{loader: loader}} ->
+        loader
+        |> Dataloader.load(Loaders.Teams, {:team, id}, id)
+        |> on_load(fn loader ->
+          result = Dataloader.get(loader, Loaders.Teams, {:team, id}, id)
+          {:ok, result}
+        end)
       end)
     end
   end

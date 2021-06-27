@@ -4,6 +4,7 @@ defmodule TeamCowboyGraphQLWeb.Resolvers.Teams do
   alias TeamCowboyGraphQL.Data.Normalization.TeamCowboy.Teams
   alias TeamCowboyGraphQL.Client.User
   alias TeamCowboyGraphQL.Client.Team, as: TeamClient
+  require Logger
 
   @spec list(any, map(), map()) :: {:ok, list(Team.t())} | {:error, binary}
   def list(_parent, _args, %{context: %{client: %Client{auth: nil}}}) do
@@ -22,7 +23,9 @@ defmodule TeamCowboyGraphQLWeb.Resolvers.Teams do
   def by_id(_, _, %{context: %{client: %Client{auth: nil}}}),
     do: {:error, "No authorization header"}
 
-  def by_id(_parent, %{id: id}, %{context: %{client: client}}) do
+  def by_id(_, %{id: id}, %{context: %{client: client}}) do
+    Logger.debug("Resolving a team by id. Team Id: #{id}")
+
     case TeamClient.get(client, %{team_id: id}) do
       {:ok, raw_team} -> {:ok, Teams.normalize_user_team(raw_team)}
       {:error, msg} -> {:error, msg}

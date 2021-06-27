@@ -13,6 +13,13 @@ defmodule TeamCowboyGraphQL.Data.Normalization.TeamCowboy.EventsTest do
         "eventType" => "foo",
         "status" => "bar",
         "titleFull" => "TITLE",
+        "rsvpInstances" => [
+          %{
+            "rsvpDetails" => %{
+              "status" => "yes"
+            }
+          }
+        ],
         "dateTimeInfo" => %{
           "startDateTimeUtc" => "2019-02-20 07:16:49",
           "endDateTimeUtc" => "2019-02-20 07:17:05"
@@ -32,6 +39,7 @@ defmodule TeamCowboyGraphQL.Data.Normalization.TeamCowboy.EventsTest do
                event_type: "foo",
                status: "bar",
                title: "TITLE",
+               viewer_rsvp_status: :yes,
                start_timestamp: 1_550_647_009,
                end_timestamp: 1_550_647_025,
                team_id: 5
@@ -46,6 +54,13 @@ defmodule TeamCowboyGraphQL.Data.Normalization.TeamCowboy.EventsTest do
         "eventType" => "foo",
         "status" => "bar",
         "titleFull" => "title&nbsp;full",
+        "rsvpInstances" => [
+          %{
+            "rsvpDetails" => %{
+              "status" => "yes"
+            }
+          }
+        ],
         "dateTimeInfo" => %{
           "startDateTimeUtc" => "2019-02-20 07:16:49",
           "endDateTimeUtc" => "2019-02-20 07:17:05"
@@ -69,6 +84,13 @@ defmodule TeamCowboyGraphQL.Data.Normalization.TeamCowboy.EventsTest do
         "eventType" => "foo",
         "status" => "bar",
         "titleFull" => "title &amp; full",
+        "rsvpInstances" => [
+          %{
+            "rsvpDetails" => %{
+              "status" => "yes"
+            }
+          }
+        ],
         "dateTimeInfo" => %{
           "startDateTimeUtc" => "2019-02-20 07:16:49",
           "endDateTimeUtc" => "2019-02-20 07:17:05"
@@ -83,6 +105,50 @@ defmodule TeamCowboyGraphQL.Data.Normalization.TeamCowboy.EventsTest do
 
       assert title == "title & full"
     end
+
+    test "it normalizes a Get_TeamEvents response" do
+      response =
+        "test/fixtures/normalization/Get_TeamEvents-response.json"
+        |> File.read!()
+        |> Poison.decode!()
+
+      normalized_event = Events.normalize_team_event(response["body"] |> List.first())
+
+      assert normalized_event == %Event{
+               event_id: 1_785_791,
+               season_id: 78028,
+               season_name: "GSHL Spring 2021 Season",
+               event_type: "game",
+               status: "active",
+               title: "Monarchs 5B (Away) vs. TBD",
+               viewer_rsvp_status: :yes,
+               start_timestamp: 1_621_916_700,
+               end_timestamp: 1_621_923_900,
+               team_id: 16461
+             }
+    end
+
+    test "it normalizes an Event_Get response" do
+      response =
+        "test/fixtures/normalization/Event_Get-response.json"
+        |> File.read!()
+        |> Poison.decode!()
+
+      normalized_event = Events.normalize_team_event(response["body"])
+
+      assert normalized_event == %Event{
+               event_id: 1_785_791,
+               season_id: 78028,
+               season_name: nil,
+               event_type: "game",
+               status: "active",
+               title: "Monarchs 5B (Away) vs. TBD",
+               viewer_rsvp_status: :yes,
+               start_timestamp: 1_621_916_700,
+               end_timestamp: 1_621_923_900,
+               team_id: 16461
+             }
+    end
   end
 
   describe ".normalize_team_events" do
@@ -94,6 +160,13 @@ defmodule TeamCowboyGraphQL.Data.Normalization.TeamCowboy.EventsTest do
         "eventType" => "foo",
         "status" => "bar",
         "titleFull" => "TITLE",
+        "rsvpInstances" => [
+          %{
+            "rsvpDetails" => %{
+              "status" => "yes"
+            }
+          }
+        ],
         "dateTimeInfo" => %{
           "startDateTimeUtc" => "2019-02-20 07:16:49",
           "endDateTimeUtc" => "2019-02-20 07:17:05"
@@ -110,6 +183,13 @@ defmodule TeamCowboyGraphQL.Data.Normalization.TeamCowboy.EventsTest do
         "eventType" => "foo",
         "status" => "bar",
         "titleFull" => "TITLE",
+        "rsvpInstances" => [
+          %{
+            "rsvpDetails" => %{
+              "status" => "yes"
+            }
+          }
+        ],
         "dateTimeInfo" => %{
           "startDateTimeUtc" => "2019-02-20 07:16:49",
           "endDateTimeUtc" => "2019-02-20 07:17:05"

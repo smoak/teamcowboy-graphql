@@ -14,8 +14,8 @@ config :teamcowboygraphql,
 config :teamcowboygraphql, TeamCowboyGraphQLWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "bJFHdHuy3T1DqehLMmJSdIKrXsZxJr9yAn291iGTbBOQvOs6mfEROcTsBD8cxZp0",
-  render_errors: [view: TeamCowboyGraphQLWeb.ErrorView, accepts: ~w(json)],
-  pubsub: [name: TeamCowboyGraphQL.PubSub, adapter: Phoenix.PubSub.PG2]
+  render_errors: [view: TeamCowboyGraphQLWeb.ErrorView, accepts: ~w(json), layout: false],
+  pubsub_server: TeamCowboyGraphQL.PubSub
 
 # Configures Elixir's Logger
 config :logger, :console,
